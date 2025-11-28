@@ -60,6 +60,12 @@ body {
   line-height: 1.6;
 }
 
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .status {
   display: flex;
   align-items: center;

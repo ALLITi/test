@@ -1,18 +1,27 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
+const highScoreEl = document.getElementById("high-score");
 const restartBtn = document.getElementById("restart");
 
 const gridSize = 24;
 const tileCount = canvas.width / gridSize;
+const HIGH_SCORE_KEY = "snake-high-score";
 
 let snake;
 let velocity;
 let food;
 let score;
 let loop;
+let highScore = 0;
+
+function loadHighScore() {
+  const stored = Number.parseInt(localStorage.getItem(HIGH_SCORE_KEY), 10);
+  return Number.isFinite(stored) && stored > 0 ? stored : 0;
+}
 
 function resetGame() {
+  highScore = loadHighScore();
   snake = [
     { x: 8, y: 12 },
     { x: 7, y: 12 },
@@ -128,6 +137,11 @@ function endGame() {
 
 function updateScore() {
   scoreEl.textContent = score.toString();
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem(HIGH_SCORE_KEY, String(highScore));
+  }
+  highScoreEl.textContent = highScore.toString();
 }
 
 function handleKeydown(event) {
